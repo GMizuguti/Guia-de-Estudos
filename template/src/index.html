@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme-init>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="{{DESCRICAO_CURTA}}">
+  <title>{{TITULO_COMPLETO}}</title>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/phosphor-regular.css">
+  <link rel="stylesheet" href="css/phosphor-fill.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/learn.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= Barra superior ================= -->
+  <header class="topbar">
+    <button class="iconbtn menubtn" id="menuBtn" title="Índice de seções" aria-label="Abrir índice de seções">
+      <i class="ph ph-list" aria-hidden="true"></i>
+    </button>
+
+    <div class="brand">
+      <span class="brand__mark"><i class="ph-fill ph-book-open" aria-hidden="true"></i></span>
+      <span class="brand__text">
+        <span class="brand__title"></span>
+        <span class="brand__sub"></span>
+      </span>
+    </div>
+
+    <nav class="nav" aria-label="Seções do aplicativo">
+      <button class="nav__btn" data-view="home" title="Início"><i class="ph ph-house" aria-hidden="true"></i><span>Início</span></button>
+      <button class="nav__btn" data-view="manual" title="Manual"><i class="ph ph-book-open-text" aria-hidden="true"></i><span>Manual</span></button>
+      <button class="nav__btn" data-view="mapa" title="Mapa de revisão"><i class="ph ph-map-trifold" aria-hidden="true"></i><span>Mapa</span></button>
+      <button class="nav__btn" data-view="treino" title="Treino com resposta escrita"><i class="ph ph-pencil-line" aria-hidden="true"></i><span>Treino</span></button>
+      <button class="nav__btn" data-view="simulado" title="Simulado"><i class="ph ph-clipboard-text" aria-hidden="true"></i><span>Simulado</span></button>
+      <button class="nav__btn" data-view="fichas" title="Fichas"><i class="ph ph-cards" aria-hidden="true"></i><span>Fichas</span></button>
+      <button class="nav__btn" data-view="test" title="Questões de múltipla escolha"><i class="ph ph-exam" aria-hidden="true"></i><span>Questões</span></button>
+      <button class="nav__btn" data-view="comparador" title="Comparador"><i class="ph ph-columns" aria-hidden="true"></i><span>Comparador</span></button>
+    </nav>
+
+    <span class="topbar__spacer"></span>
+
+    <button class="searchbtn" id="searchBtn" aria-label="Buscar em todo o manual">
+      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+      <span>Buscar no manual</span>
+      <kbd>Ctrl K</kbd>
+    </button>
+
+    <button class="iconbtn" id="themeBtn" title="Alternar tema" aria-label="Alternar tema">
+      <i class="ph ph-circle-half" aria-hidden="true"></i>
+    </button>
+    <button class="iconbtn" id="settingsBtn" title="Ajustes de leitura" aria-label="Ajustes de leitura">
+      <i class="ph ph-sliders-horizontal" aria-hidden="true"></i>
+    </button>
+  </header>
+
+  <!-- ================= Corpo ================= -->
+  <div class="body" id="bodyGrid">
+
+    <aside class="sidebar" id="sidebar" hidden aria-label="Índice do manual">
+      <div class="side-progress" id="sideProgress"></div>
+      <div class="side-h">Capítulos</div>
+      <div class="chaplist" id="chapList"></div>
+    </aside>
+
+    <main class="main" id="main">
+      <section class="view is-active" id="view-home" aria-label="Início"></section>
+      <section class="view" id="view-manual" aria-label="Manual"></section>
+      <section class="view" id="view-mapa" aria-label="Mapa de revisão"></section>
+      <section class="view" id="view-treino" aria-label="Treino com resposta escrita"></section>
+      <section class="view" id="view-simulado" aria-label="Simulado"></section>
+      <section class="view" id="view-fichas" aria-label="Fichas de revisão"></section>
+      <section class="view" id="view-test" aria-label="Questões de múltipla escolha"></section>
+      <section class="view" id="view-comparador" aria-label="Comparador"></section>
+    </main>
+
+  </div>
+</div>
+
+<!-- ================= Paleta de busca ================= -->
+<div class="overlay" id="palette" hidden role="dialog" aria-modal="true" aria-label="Buscar">
+  <div class="palette">
+    <div class="palette__in">
+      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+      <input type="text" id="palInput" placeholder="Buscar no manual, nas fichas, nas questões…" autocomplete="off" spellcheck="false" aria-label="Termo de busca">
+      <span class="palette__esc">Esc</span>
+    </div>
+    <div class="palette__res" id="palResults"></div>
+    <div class="palette__foot">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navegar</span>
+      <span><kbd>↵</kbd> abrir</span>
+      <span><kbd>Esc</kbd> fechar</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= Ajustes ================= -->
+<aside class="drawer" id="drawer" hidden role="dialog" aria-label="Ajustes">
+  <div class="drawer__head">
+    <h2>Ajustes de leitura</h2>
+    <button class="iconbtn" id="drawerClose" aria-label="Fechar ajustes"><i class="ph ph-x" aria-hidden="true"></i></button>
+  </div>
+  <div class="drawer__body">
+
+    <div class="field">
+      <span class="field__label">Tema</span>
+      <div class="segmented">
+        <button data-set-theme="system" aria-pressed="true"><i class="ph ph-circle-half" aria-hidden="true"></i>Sistema</button>
+        <button data-set-theme="light" aria-pressed="false"><i class="ph ph-sun" aria-hidden="true"></i>Claro</button>
+        <button data-set-theme="dark" aria-pressed="false"><i class="ph ph-moon" aria-hidden="true"></i>Escuro</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span class="field__label">Fonte do texto</span>
+      <div class="segmented">
+        <button data-set-font="sans" aria-pressed="true">Sans</button>
+        <button data-set-font="serif" aria-pressed="false" style="font-family:var(--font-serif)">Serif</button>
+      </div>
+      <p class="field__hint">A serif (Source Serif 4) costuma cansar menos em sessões longas de leitura corrida.</p>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="sizeRange">Tamanho do texto · <span id="sizeVal">16 px</span></label>
+      <input type="range" id="sizeRange" min="14" max="22" step="1" value="16">
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="lhRange">Entrelinha · <span id="lhVal">1.68</span></label>
+      <input type="range" id="lhRange" min="140" max="210" step="2" value="168">
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="measureRange">Largura da coluna · <span id="measureVal">74 caracteres</span></label>
+      <input type="range" id="measureRange" min="52" max="100" step="2" value="74">
+    </div>
+
+    <div class="field">
+      <span class="field__label">Seu progresso</span>
+      <p class="field__hint" id="statsLine" style="margin:0 0 12px"></p>
+      <div style="display:grid;gap:8px">
+        <button class="btn btn--ghost btn--sm" id="exportBtn"><i class="ph ph-download-simple" aria-hidden="true"></i>Exportar progresso (JSON)</button>
+        <label class="btn btn--ghost btn--sm" style="cursor:pointer">
+          <i class="ph ph-upload-simple" aria-hidden="true"></i>Importar progresso
+          <input type="file" id="importInput" accept="application/json,.json" hidden>
+        </label>
+        <button class="btn btn--ghost btn--sm" id="printBtn"><i class="ph ph-printer" aria-hidden="true"></i>Imprimir a tela atual</button>
+        <button class="btn btn--ghost btn--sm danger" id="resetBtn"><i class="ph ph-trash" aria-hidden="true"></i>Apagar todo o progresso</button>
+      </div>
+      <p class="field__hint">Tudo fica salvo só neste computador. Nada sai do aplicativo.</p>
+    </div>
+
+    <div class="field">
+      <span class="field__label">Atalhos de teclado</span>
+      <p class="field__hint" style="line-height:1.9">
+        <kbd>Ctrl</kbd>+<kbd>K</kbd> ou <kbd>/</kbd> · buscar<br>
+        <kbd>←</kbd> <kbd>→</kbd> · capítulo anterior ou seguinte<br>
+        <kbd>espaço</kbd> · virar a ficha<br>
+        <kbd>1</kbd>-<kbd>4</kbd> · avaliar a ficha<br>
+        <kbd>T</kbd> · alternar tema
+      </p>
+    </div>
+
+    <p class="field__hint" id="footerNote" style="border-top:1px solid var(--border);padding-top:16px"></p>
+
+  </div>
+</aside>
+
+<div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+
+<!-- ================= Dados =================
+     Ordem: meta → figuras → casos → capítulos (um <script> por capítulo, NA ORDEM) → fichas → questões
+     → comparador → eixos → treino → simulado → mapa. Acrescente c02.js, c03.js ... conforme escrever. -->
+<script src="data/meta.js"></script>
+<script src="data/figuras.js"></script>
+<script src="data/cases.js"></script>
+<script src="data/c01.js"></script>
+<script src="data/cards.js"></script>
+<script src="data/quiz.js"></script>
+<script src="data/compare.js"></script>
+<script src="data/eixos.js"></script>
+<script src="data/treino.js"></script>
+<script src="data/simulado.js"></script>
+<script src="data/mapa.js"></script>
+
+<!-- ================= Aplicação ================= -->
+<script src="js/store.js"></script>
+<script src="js/render.js"></script>
+<script src="js/search.js"></script>
+<script src="js/figures.js"></script>
+<script src="js/treino.js"></script>
+<script src="js/mapa.js"></script>
+<script src="js/simulado.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
