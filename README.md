@@ -18,7 +18,8 @@ Tudo o que o app acrescenta ao material aparece marcado como do app.
 Clone dentro da pasta de skills do Claude Code:
 
 ```bash
-git clone https://github.com/<usuario>/manual-de-estudo.git ~/.claude/skills/manual-de-estudo
+git clone https://github.com/GMizuguti/Guia-de-Estudos.git ~/.claude/skills/guia-de-estudos
+
 ```
 
 No Windows, `~` é `C:\Users\<usuario>`. A skill aparece como `/manual-de-estudo`.
